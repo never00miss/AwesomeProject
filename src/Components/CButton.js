@@ -2,7 +2,8 @@ import React from 'react';
 import {
     View,
     Button,
-    StyleSheet
+    StyleSheet,
+    ActivityIndicator
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -22,10 +23,16 @@ export default class CButton extends React.Component {
             <View style={{
                 ...styles.container,
                 ...this.props.styleContainer
-            }}> 
-                <Button
-                    color={this.props.color} title={this.props.title}
-                />
+            }}>
+                {
+                    this.props.isLoading ?
+                        <ActivityIndicator />
+                        :
+                        <Button
+                            onPress={() => this.props.onPress()}
+                            color={this.props.color} title={this.props.title}
+                        />
+                }
             </View>
         )
     }

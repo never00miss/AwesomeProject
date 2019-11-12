@@ -8,6 +8,10 @@ import CTextInput from '../../Components/CTextInput';
 import { styleLogin } from './style';
 
 export default class LoginScreen extends React.Component {
+    state = {
+        isLoading: false
+    }
+
     _handlerGoToHome = () => {
         this.props.navigation.navigate("Home");
     }
@@ -16,7 +20,7 @@ export default class LoginScreen extends React.Component {
         return (
             <View
                 style={{
-                    flex: 1,
+                    flex: 10,
                     flexDirection: "column",
                     padding: 20
                 }}>
@@ -24,13 +28,26 @@ export default class LoginScreen extends React.Component {
                 <CTextInput styleContainer={styleLogin.formInput} />
                 <CTextInput styleContainer={styleLogin.formInput} />
                 <CButton
+                    onPress={() => {
+                        this.setState({
+                            isLoading: true
+                        }, () => {
+                            setTimeout(() => {
+                                this.setState({
+                                    isLoading: false
+                                })
+
+                            }, 5000)
+                        })
+                    }}
+                    isLoading={this.state.isLoading}
                     styleContainer={{
                         flex: 1,
                         margin: 20,
                         flexDirection: "column",
                     }}
                     title={"LOGIN"}
-                    color={"black"}
+                    color={"blue"}
                 />
             </View>
         );
