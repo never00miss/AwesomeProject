@@ -1,9 +1,11 @@
 import React from 'react';
 import {
     View,
-    Text,
-    Button
+    Text
 } from 'react-native';
+import CButton from '../../Components/CButton';
+import CTextInput from '../../Components/CTextInput';
+import { styleLogin } from './style';
 
 export default class LoginScreen extends React.Component {
     _handlerGoToHome = () => {
@@ -12,18 +14,23 @@ export default class LoginScreen extends React.Component {
 
     render() {
         return (
-            <View style={{ 
-                flex: 1, 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                backgroundColor: "yellow"
+            <View
+                style={{
+                    flex: 1,
+                    flexDirection: "column",
+                    padding: 20
                 }}>
-                <Text>Login Screen</Text>
-                <Button 
-                    onPress={()=> {
-                        this._handlerGoToHome();
+                <Text style={{ alignSelf: "center" }}>Login Screen</Text>
+                <CTextInput styleContainer={styleLogin.formInput} />
+                <CTextInput styleContainer={styleLogin.formInput} />
+                <CButton
+                    styleContainer={{
+                        flex: 1,
+                        margin: 20,
+                        flexDirection: "column",
                     }}
-                    title={"button"}
+                    title={"LOGIN"}
+                    color={"black"}
                 />
             </View>
         );
