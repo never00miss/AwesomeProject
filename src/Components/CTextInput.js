@@ -24,7 +24,12 @@ export default class CTextInput extends React.Component {
                 ...styles.container,
                 ...this.props.styleContainer
             }}> 
-                <TextInput/>
+                <TextInput 
+                    {...this.props}
+                    // onChangeText={(val) => {
+                    //     this.props.onTyping(val)
+                    // }}
+                />
             </View>
         )
     }

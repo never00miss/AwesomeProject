@@ -9,7 +9,8 @@ import { styleLogin } from './style';
 
 export default class LoginScreen extends React.Component {
     state = {
-        isLoading: false
+        isLoading: false,
+        username: ""
     }
 
     _handlerGoToHome = () => {
@@ -25,8 +26,16 @@ export default class LoginScreen extends React.Component {
                     padding: 20
                 }}>
                 <Text style={{ alignSelf: "center" }}>Login Screen</Text>
-                <CTextInput styleContainer={styleLogin.formInput} />
-                <CTextInput styleContainer={styleLogin.formInput} />
+                <CTextInput
+                    onChangeText={(val) => {
+                        this.setState({ username: val })
+                    }}
+                    styleContainer={styleLogin.formInput} />
+                <CTextInput
+                    onChangeText={(val) => {
+                        this.setState({ password: val })
+                    }}
+                    styleContainer={styleLogin.formInput} />
                 <CButton
                     onPress={() => {
                         this.setState({
