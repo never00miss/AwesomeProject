@@ -1,7 +1,8 @@
 import React from 'react';
 import {
     View,
-    Text
+    Text,
+    ToastAndroid
 } from 'react-native';
 import CButton from '../../Components/CButton';
 import CTextInput from '../../Components/CTextInput';
@@ -10,11 +11,38 @@ import { styleLogin } from './style';
 export default class LoginScreen extends React.Component {
     state = {
         isLoading: false,
-        username: ""
+        username: "",
+        password: ""
     }
 
     _handlerGoToHome = () => {
-        this.props.navigation.navigate("Home");
+        this.props.navigation.navigate("Home", { username: this.state.username });
+    }
+
+    _validateEmail = (text) => {
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(text);
+    }
+
+    _toastMessage = (message) => {
+        ToastAndroid.show(message, ToastAndroid.SHORT);
+    }
+
+    _handlerLogin = () => {
+        this.setState({ isLoading: true });
+
+        const { username, password } = this.state;
+
+        if (!this._validateEmail(username)) {
+            this._toastMessage("Email not valid");
+            this.setState({ isLoading: false });
+            return;
+        }
+
+        this.setState({ isLoading: false }, () => {
+            this._handlerGoToHome()
+        });
+        return;
     }
 
     render() {
@@ -35,19 +63,11 @@ export default class LoginScreen extends React.Component {
                     onChangeText={(val) => {
                         this.setState({ password: val })
                     }}
+                    secureTextEntry={true}
                     styleContainer={styleLogin.formInput} />
                 <CButton
                     onPress={() => {
-                        this.setState({
-                            isLoading: true
-                        }, () => {
-                            setTimeout(() => {
-                                this.setState({
-                                    isLoading: false
-                                })
-
-                            }, 5000)
-                        })
+                        this._handlerLogin();
                     }}
                     isLoading={this.state.isLoading}
                     styleContainer={{
